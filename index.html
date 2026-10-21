@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EXPRESS DELIVERY | Track Your Package</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      color: #172033;
+    }
+    header {
+      background: #102a56;
+      color: white;
+      padding: 22px 18px;
+      text-align: center;
+    }
+    header h1 { margin: 0; font-size: 24px; }
+    header p { margin-bottom: 0; color: #d6e4ff; }
+    main {
+      max-width: 620px;
+      margin: 35px auto;
+      padding: 0 16px;
+    }
+    .card {
+      background: white;
+      padding: 24px;
+      border-radius: 14px;
+      box-shadow: 0 5px 24px #17203312;
+    }
+    h2 { margin-top: 0; }
+    label {
+      display: block;
+      font-weight: bold;
+      margin: 20px 0 8px;
+    }
+    input, button {
+      width: 100%;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    input {
+      border: 1px solid #cbd5e1;
+    }
+    button {
+      margin-top: 14px;
+      border: 0;
+      background: #1769e0;
+      color: white;
+      font-weight: bold;
+    }
+    #result {
+      margin-top: 20px;
+      line-height: 1.6;
+      overflow-wrap: anywhere;
+    }
+    footer {
+      text-align: center;
+      color: #64748b;
+      padding: 24px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>EXPRESS DELIVERY</h1>
+    <p>Reliable. Secure. Delivered.</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Track Your Package</h2>
+      <p>Enter your tracking number to check your shipment.</p>
+
+      <form id="trackingForm">
+        <label for="trackingNumber">Tracking number</label>
+        <input
+          id="trackingNumber"
+          name="trackingNumber"
+          placeholder="Enter tracking number"
+          required
+        >
+        <button type="submit">Track Package</button>
+      </form>
+
+      <div id="result" role="status" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; <span id="year"></span> EXPRESS DELIVERY
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+    document.getElementById("trackingForm").addEventListener(
+      "submit", function(event) {
+        event.preventDefault();
+        const number = document.getElementById(
+          "trackingNumber"
+        ).value.trim();
+
+        document.getElementById("result").textContent =
+          "Tracking lookup is not connected yet. Please check back later.";
+      }
+    );
+  </script>
+</body>
+</html>
