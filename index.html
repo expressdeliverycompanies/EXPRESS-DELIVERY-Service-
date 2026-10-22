@@ -98,20 +98,40 @@
   </footer>
 
   <script>
-    document.getElementById("year").textContent =
-      new Date().getFullYear();
+document.getElementById("year").textContent = new Date().getFullYear();
 
-    document.getElementById("trackingForm").addEventListener(
-      "submit", function(event) {
-        event.preventDefault();
-        const number = document.getElementById(
-          "trackingNumber"
-        ).value.trim();
+document.getElementById("trackingForm").addEventListener("submit", function(event) {
+  event.preventDefault();
 
-        document.getElementById("result").textContent =
-          "Tracking lookup is not connected yet. Please check back later.";
+  const number = document.getElementById("trackingNumber").value.trim();
+  const result = document.getElementById("result");
+
+  if (!number) {
+    result.textContent = "Please enter your tracking number.";
+    return;
+  }
+
+  result.textContent = "Checking your shipment...";
+
+  fetch("/api/track?trackingNumber=" + encodeURIComponent(number))
+    .then(response => response.json().then(data => ({ response, data })))
+    .then(({ response, data }) => {
+      if (!response.ok) {
+        result.textContent = data.error || "Tracking number not found.";
+        return;
       }
-    );
-  </script>
+
+      const s = data.shipment;
+      result.textContent =
+        "Tracking Number: " + s.tracking_number +
+        " | Status: " + s.status +
+        " | Origin: " + (s.origin || "Not available") +
+        " | Destination: " + (s.destination || "Not available");
+    })
+    .catch(() => {
+      result.textContent = "Unable to connect. Please try again later.";
+    });
+});
+</script>
 </body>
 </html>
