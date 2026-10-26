@@ -36,12 +36,12 @@ export default async function handler(req, res) {
       }
     );
 
-    if (!response.ok) {
+    
+if (!response.ok) {
       return res.status(502).json({
         error: "Tracking service temporarily unavailable."
       });
     }
-
     const shipments = await response.json();
 
     if (!shipments.length) {
